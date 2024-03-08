@@ -64,7 +64,7 @@ public class MongoConnector {
     // Instancia la base de datos con el codec pojo especificado en el constructor de esta clase. Además crea la coleccion almacenada en props
     private void tryConnectCollection(MongoClient client) throws MongoException{
         db = client.getDatabase("sala").withCodecRegistry(pojoCodecRegistry);
-        db.getCollection("user");
+        db.createCollection("test");
     }
     
     public boolean dropDatabase(String dbName){

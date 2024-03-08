@@ -28,7 +28,7 @@ public class RegisterController {
         frame = new RegisterFrame();
     }
     
-    public RegisterFrame getMainFrame(){
+    public RegisterFrame getRegisterFrame(){
         return frame;
     }
 }

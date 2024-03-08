@@ -1,8 +1,5 @@
 package controller;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import mongodb.MongoConnector;
 import view.LoginFrame;
 
@@ -16,7 +13,7 @@ public class LoginController {
     private static LoginController instance;
     
     private LoginController(){
-        //MongoConnector.getInstance().tryConnect();
+        MongoConnector.getInstance().tryConnect();
     }
     
     public static LoginController getInstance(){

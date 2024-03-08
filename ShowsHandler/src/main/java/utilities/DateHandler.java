@@ -10,7 +10,6 @@ import java.util.Date;
  */
 public class DateHandler {
     public static LocalDate converToLocalDate(Date date){
-        
         Instant instant = date.toInstant();
         return instant.atZone(ZoneId.systemDefault()).toLocalDate();
     }
