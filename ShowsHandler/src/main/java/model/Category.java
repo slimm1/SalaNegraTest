@@ -6,4 +6,5 @@ package model;
  */
 public class Category {
     private String catName;
+    private int catId;
 }

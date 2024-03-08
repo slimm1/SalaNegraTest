@@ -9,4 +9,5 @@ public class Session {
     private LocalDateTime loginDateTime;
     private LocalDateTime logoutDateTime;
     private User user;
+    private boolean login;
 }

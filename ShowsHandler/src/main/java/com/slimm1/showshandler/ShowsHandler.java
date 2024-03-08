@@ -1,16 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
 
 package com.slimm1.showshandler;
 
+import controller.LoginController;
+
 /**
- *
- * @author marti
+ * @author Martin Ramonda
  */
 public class ShowsHandler {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        LoginController.getInstance().launchLoginFrame();
     }
 }
