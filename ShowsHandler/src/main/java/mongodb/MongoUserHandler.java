@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import model.Show;
+import model.Event;
 import model.User;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -17,17 +17,15 @@ import org.bson.types.ObjectId;
  * @author Martin Ramonda
  * Esta clase incluye los métodos de acceso a la base de datos.
  */
-public class MongoDataLoader {
+public class MongoUserHandler {
     
     private MongoCollection<User> userCollection;
-    private MongoCollection<Show> showCollection;
     
-    private static MongoDataLoader instance;
+    private static MongoUserHandler instance;
     
     // inicia la collecion en mongo a través de la base de datos de MongoConnector.
-    private MongoDataLoader(){
-        userCollection = MongoConnector.getInstance().getDatabase().getCollection("user", User.class);
-        showCollection = MongoConnector.getInstance().getDatabase().getCollection("eventos",Show.class);
+    private MongoUserHandler(){
+        userCollection = MongoConnector.getInstance().getDatabase().getCollection("users", User.class);
     }
     
     public boolean insertUserIntoDb(User user){
@@ -107,8 +105,8 @@ public class MongoDataLoader {
         return userCollection.find().into(new ArrayList());
     }
     
-    public Set<Show> getAllShow(){
-        Set<Show> allShows = new HashSet();
+    public Set<Event> getAllShow(){
+        Set<Event> allShows = new HashSet();
         MongoCursor<User> cursor = userCollection.find().iterator();
         while(cursor.hasNext()){
             User u = cursor.next();
@@ -117,7 +115,7 @@ public class MongoDataLoader {
         return allShows;
     }
     
-    public Show getOneShow(Show show){
+    public Event getOneShow(Event show){
         MongoCursor<User> cursor = userCollection.find().iterator();
         while(cursor.hasNext()){
             User u = cursor.next();
@@ -126,9 +124,9 @@ public class MongoDataLoader {
         return null;
     }
     
-    public static MongoDataLoader getInstance(){
+    public static MongoUserHandler getInstance(){
         if(instance==null){
-            instance = new MongoDataLoader();
+            instance = new MongoUserHandler();
         }
         return instance;
     }

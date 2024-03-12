@@ -3,7 +3,7 @@ package view;
 import controller.LoginController;
 import controller.MainController;
 import model.User;
-import mongodb.MongoDataLoader;
+import mongodb.MongoUserHandler;
 import utilities.DateHandler;
 import utilities.InputValidation;
 import utilities.Security;
@@ -36,8 +36,9 @@ public class RegisterFrame extends javax.swing.JFrame {
            if(InputValidation.validateRegister(nameField.getText(), surnameField.getText(), emailField.getText(), dateChooser.getDate(), (String)genderComboBox.getSelectedItem(), usernameField.getText(), new String(passField.getPassword()), new String(repeatPassField.getPassword()))){
                String pass = Security.hashSha256(new String(passField.getPassword()));
                User newUser = new User(usernameField.getText(), pass, nameField.getText(),surnameField.getText(),emailField.getText(),(String)genderComboBox.getSelectedItem(), DateHandler.converToLocalDate(dateChooser.getDate()));
-               MongoDataLoader.getInstance().insertUserIntoDb(newUser);
+               MongoUserHandler.getInstance().insertUserIntoDb(newUser);
                this.setVisible(false);
+               MainController.getInstance().setCurrentUser(newUser);
                MainController.getInstance().launchMainFrame();
            }
         });

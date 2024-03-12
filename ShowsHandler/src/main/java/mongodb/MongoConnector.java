@@ -42,7 +42,7 @@ public class MongoConnector {
      * prueba la conexion a la base de datos mongo. La clase connectionString se crea a partir de la cadena de conexion.
      * MongoClientSettings determina unos ajustes para iniciar el cliente, que intenta conectarse a la base de datos desde el metodo
      * tryConnectConnection(MongoClient)
-     * @return 
+     * @return false si la conexion falla. true si la conexion fue exitosa.
      */
     public boolean tryConnect(){
         ConnectionString connString = new ConnectionString("mongodb://localhost:57017");
@@ -56,7 +56,7 @@ public class MongoConnector {
             return true;
         }
         catch(MongoException m){
-            JOptionPane.showConfirmDialog(null, "Error al abrir la conexion mongodb. REVISAR QUE EL PUERTO 57017 ESTA OPERATIVO y reinicia la app", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(null, "Error al abrir la conexion mongodb. REVISAR QUE EL PUERTO 57017 ESTA OPERATIVO y reinicia la app", "ERROR", JOptionPane.OK_OPTION);
             return false;
         }
     }
@@ -64,7 +64,8 @@ public class MongoConnector {
     // Instancia la base de datos con el codec pojo especificado en el constructor de esta clase. Además crea la coleccion almacenada en props
     private void tryConnectCollection(MongoClient client) throws MongoException{
         db = client.getDatabase("sala").withCodecRegistry(pojoCodecRegistry);
-        db.createCollection("test");
+        db.createCollection("events");
+        db.createCollection("users");
     }
     
     public boolean dropDatabase(String dbName){

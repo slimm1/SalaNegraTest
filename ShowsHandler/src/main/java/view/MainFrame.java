@@ -1,7 +1,13 @@
 package view;
 
+import controller.LoginController;
+import controller.MainController;
+import javax.swing.DefaultListModel;
+import model.Event;
+import mongodb.MongoEventHandler;
+import utilities.DateHandler;
+
 /**
- *
  * @author Martin Ramonda
  */
 public class MainFrame extends javax.swing.JFrame {
@@ -11,10 +17,32 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        initView();
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        setListeners();
+    }
+    
+    public void initView(){
+        this.usernameLabel.setText(MainController.getInstance().getCurrentUser().getUsername());
+        this.showLabel.setText("-");
+    }
+    
+    public void setListeners(){
+        this.logoutButton.addActionListener(e->{
+            this.setVisible(false);
+            LoginController.getInstance().getLoginFrame().setVisible(true);
+            MainController.getInstance().setCurrentUser(null);
+        });
+        this.progCalendar.addPropertyChangeListener(e->{
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            for (Event item : MongoEventHandler.getInstance().getEventsOnDate(DateHandler.converToLocalDate(progCalendar.getDate()))){
+                listModel.addElement(item.getTitle());
+            }
+            this.showList.setModel(listModel);
+        });
     }
 
     /**

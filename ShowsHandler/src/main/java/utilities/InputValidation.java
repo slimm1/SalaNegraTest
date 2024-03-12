@@ -1,8 +1,9 @@
 package utilities;
 
+import controller.MainController;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import mongodb.MongoDataLoader;
+import mongodb.MongoUserHandler;
 
 /**
  * @author Martin Ramonda
@@ -15,10 +16,11 @@ public class InputValidation {
             JOptionPane.showConfirmDialog(null, "Debes completar todos los campos para continuar", "ALERTA", JOptionPane.WARNING_MESSAGE);
             return false;
         }
-        else if(MongoDataLoader.getInstance().getUser(username, password) == null){
+        else if(MongoUserHandler.getInstance().getUser(username, password) == null){
             JOptionPane.showConfirmDialog(null, "Usuario o contraseña incorrecta", "ALERTA", JOptionPane.WARNING_MESSAGE);
             return false;
         }
+        MainController.getInstance().setCurrentUser(MongoUserHandler.getInstance().getUser(username, password));
         return true;
     }
     
@@ -31,11 +33,11 @@ public class InputValidation {
             JOptionPane.showConfirmDialog(null, "Las contraseñas no coinciden", "ALERTA", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        else if(MongoDataLoader.getInstance().getUserByEmail(email)!=null){
+        else if(MongoUserHandler.getInstance().getUserByEmail(email)!=null){
             JOptionPane.showConfirmDialog(null, "Ya existe un usuario con el email indicado", "ALERTA", JOptionPane.ERROR_MESSAGE);            
             return false;
         }
-        else if(MongoDataLoader.getInstance().getUserByUsername(username)!=null){
+        else if(MongoUserHandler.getInstance().getUserByUsername(username)!=null){
             JOptionPane.showConfirmDialog(null, "Ya existe un usuario con ese nombre de usuario", "ALERTA", JOptionPane.ERROR_MESSAGE);
             return false;
         }

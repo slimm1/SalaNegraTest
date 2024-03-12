@@ -1,5 +1,6 @@
 package controller;
 
+import api.ApiHandler;
 import mongodb.MongoConnector;
 import view.LoginFrame;
 
@@ -10,10 +11,14 @@ public class LoginController {
     
     private LoginFrame frame;
     
+    private final ApiHandler api;
+    
     private static LoginController instance;
     
     private LoginController(){
         MongoConnector.getInstance().tryConnect();
+        api = new ApiHandler();
+        api.storeApiResponse();
     }
     
     public static LoginController getInstance(){
