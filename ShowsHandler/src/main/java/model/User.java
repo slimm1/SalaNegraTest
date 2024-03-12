@@ -17,7 +17,7 @@ public class User {
     private String email;
     private String gender;
     private LocalDate birthDate;
-    private List<Show> purchasedShows;
+    private List<Event> purchasedShows;
 
     public User() {
     }
@@ -89,11 +89,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public List<Show> getPurchasedShows() {
+    public List<Event> getPurchasedShows() {
         return purchasedShows;
     }
 
-    public void setPurchasedShows(List<Show> purchasedShows) {
+    public void setPurchasedShows(List<Event> purchasedShows) {
         this.purchasedShows = purchasedShows;
     }
 

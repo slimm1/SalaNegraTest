@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class Sale {
     private long id;
     private User user;
-    private Show show;
+    private Event show;
     private LocalDateTime saleDateTime;
     private int numTickets;
     private double totalPrice;
