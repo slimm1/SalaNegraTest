@@ -38,6 +38,7 @@ public class RegisterFrame extends javax.swing.JFrame {
                User newUser = new User(usernameField.getText(), pass, nameField.getText(),surnameField.getText(),emailField.getText(),(String)genderComboBox.getSelectedItem(), DateHandler.converToLocalDate(dateChooser.getDate()));
                MongoUserHandler.getInstance().insertUserIntoDb(newUser);
                this.setVisible(false);
+               MainController.getInstance().setCurrentUser(newUser);
                MainController.getInstance().launchMainFrame();
            }
         });

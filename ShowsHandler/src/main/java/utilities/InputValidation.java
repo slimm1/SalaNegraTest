@@ -1,5 +1,6 @@
 package utilities;
 
+import controller.MainController;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import mongodb.MongoUserHandler;
@@ -19,6 +20,7 @@ public class InputValidation {
             JOptionPane.showConfirmDialog(null, "Usuario o contraseña incorrecta", "ALERTA", JOptionPane.WARNING_MESSAGE);
             return false;
         }
+        MainController.getInstance().setCurrentUser(MongoUserHandler.getInstance().getUser(username, password));
         return true;
     }
     

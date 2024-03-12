@@ -17,6 +17,11 @@ public class DateHandler {
         return instant.atZone(ZoneId.systemDefault()).toLocalDate();
     }
     
+    public static LocalDateTime convertToLocalDateTime(Date date){
+        Instant instant = date.toInstant();
+        return instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+    
     public static LocalDateTime convertToLocalDateTime(String dateTime){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         return LocalDateTime.parse(dateTime, formatter);

@@ -1,6 +1,7 @@
 
 package controller;
 
+import model.User;
 import view.MainFrame;
 
 /**
@@ -9,6 +10,8 @@ import view.MainFrame;
 public class MainController {
     
     private MainFrame frame;
+    
+    private User currentUser;
     
     private static MainController instance;
     
@@ -29,5 +32,13 @@ public class MainController {
     
     public MainFrame getMainFrame(){
         return frame;
+    }
+    
+    public void setCurrentUser(User user){
+        this.currentUser = user;
+    }
+    
+    public User getCurrentUser(){
+        return currentUser;
     }
 }

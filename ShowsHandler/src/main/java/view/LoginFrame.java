@@ -26,11 +26,15 @@ public class LoginFrame extends javax.swing.JFrame {
             if(InputValidation.validateLogin(usernameField.getText(), new String(passField.getPassword()))){
                 this.setVisible(false);
                 MainController.getInstance().launchMainFrame();
+                this.usernameField.setText("");
+                this.passField.setText("");
             }
         });
         this.registerButton.addActionListener(e->{
             this.setVisible(false);
             RegisterController.getInstance().launchRegisterFrame();
+            this.usernameField.setText("");
+            this.passField.setText("");
         });
         
     }

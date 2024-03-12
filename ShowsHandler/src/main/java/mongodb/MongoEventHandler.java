@@ -2,6 +2,10 @@ package mongodb;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import model.Event;
 import org.bson.conversions.Bson;
 
@@ -40,5 +44,15 @@ public class MongoEventHandler {
         catch(Exception ex){
             return false;
         }
+    }
+    
+    public List<Event> getEventsOnDate(LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(23, 59, 59);
+        Bson query = Filters.and(
+            Filters.gte("startDateTime", startOfDay),
+            Filters.lte("finishDateTime", endOfDay)
+        );
+        return eventCollection.find(query).into(new ArrayList<>());
     }
 }

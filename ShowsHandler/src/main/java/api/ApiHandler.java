@@ -55,7 +55,7 @@ public class ApiHandler {
     }
     
     // almacena los objetos recuperados en la respuesta a la pai si estos no existen ya en la base de datos.
-    private void storeApiResponse(){
+    public void storeApiResponse(){
         JSONObject object = new JSONObject(apiPost(""));
         JSONArray events = object.getJSONArray("events");
         for(int i =0; i<events.length();i++){
