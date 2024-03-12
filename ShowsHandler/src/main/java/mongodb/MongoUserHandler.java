@@ -17,17 +17,15 @@ import org.bson.types.ObjectId;
  * @author Martin Ramonda
  * Esta clase incluye los métodos de acceso a la base de datos.
  */
-public class MongoDataLoader {
+public class MongoUserHandler {
     
     private MongoCollection<User> userCollection;
-    private MongoCollection<Event> showCollection;
     
-    private static MongoDataLoader instance;
+    private static MongoUserHandler instance;
     
     // inicia la collecion en mongo a través de la base de datos de MongoConnector.
-    private MongoDataLoader(){
-        userCollection = MongoConnector.getInstance().getDatabase().getCollection("user", User.class);
-        showCollection = MongoConnector.getInstance().getDatabase().getCollection("eventos",Event.class);
+    private MongoUserHandler(){
+        userCollection = MongoConnector.getInstance().getDatabase().getCollection("users", User.class);
     }
     
     public boolean insertUserIntoDb(User user){
@@ -126,9 +124,9 @@ public class MongoDataLoader {
         return null;
     }
     
-    public static MongoDataLoader getInstance(){
+    public static MongoUserHandler getInstance(){
         if(instance==null){
-            instance = new MongoDataLoader();
+            instance = new MongoUserHandler();
         }
         return instance;
     }

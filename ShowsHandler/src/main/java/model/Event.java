@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import org.bson.types.ObjectId;
 
 /**
@@ -16,7 +17,9 @@ public class Event {
     private String url;
     private List<Category> cats;
     
-    public Event(){}
+    public Event(){
+        cats = new ArrayList();
+    }
 
     public Event(String title, LocalDateTime startDateTime, LocalDateTime finishDateTime, String description, String url, List<Category> cats) {
         this.title = title;
@@ -82,6 +85,4 @@ public class Event {
     public void setCats(List<Category> cats) {
         this.cats = cats;
     }
-    
-    
 }
