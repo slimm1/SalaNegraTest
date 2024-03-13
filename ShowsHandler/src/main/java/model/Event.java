@@ -16,18 +16,21 @@ public class Event {
     private String description;
     private String url;
     private List<Category> cats;
+    private double price;
     
     public Event(){
         cats = new ArrayList();
+        setPrice();
     }
 
-    public Event(String title, LocalDateTime startDateTime, LocalDateTime finishDateTime, String description, String url, List<Category> cats) {
+    public Event(String title, LocalDateTime startDateTime, LocalDateTime finishDateTime, String description, String url, List<Category> cats, double price) {
         this.title = title;
         this.startDateTime = startDateTime;
         this.finishDateTime = finishDateTime;
         this.description = description;
         this.url = url;
         this.cats = cats;
+        this.price = price;
     }
 
     public ObjectId getId() {
@@ -84,5 +87,12 @@ public class Event {
 
     public void setCats(List<Category> cats) {
         this.cats = cats;
+    }
+    public double getPrice(){
+        return price;
+    }
+    
+    public void setPrice(){
+        price = 12;
     }
 }
