@@ -618,11 +618,14 @@
             <Component class="javax.swing.JComboBox" name="priceValuesComboBox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                  <StringArray count="7">
+                    <StringItem index="0" value="20"/>
+                    <StringItem index="1" value="40"/>
+                    <StringItem index="2" value="60"/>
+                    <StringItem index="3" value="80"/>
+                    <StringItem index="4" value="100"/>
+                    <StringItem index="5" value="120"/>
+                    <StringItem index="6" value=" "/>
                   </StringArray>
                 </Property>
               </Properties>

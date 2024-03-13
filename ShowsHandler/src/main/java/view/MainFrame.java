@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import model.Category;
 import model.Event;
 import model.Sale;
 import mongodb.MongoEventHandler;
@@ -73,6 +72,10 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void setUpEventComboBox(){
         DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel();
+        MongoEventHandler.getInstance().getAllEvents().forEach(event->{
+            comboModel.addElement(event.getTitle());
+        });
+        this.showsComboBox.setModel(comboModel);
     }
     
     public void setListeners(){
@@ -474,7 +477,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         monthlySalesButton.setText("Informe de ventas Menual");
 
-        priceValuesComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        priceValuesComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "20", "40", "60", "80", "100", "120", " " }));
 
         javax.swing.GroupLayout reportsPanelLayout = new javax.swing.GroupLayout(reportsPanel);
         reportsPanel.setLayout(reportsPanelLayout);

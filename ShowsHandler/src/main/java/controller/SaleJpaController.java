@@ -133,5 +133,58 @@ public class SaleJpaController implements Serializable {
             em.close();
         }
     }
-    
+    public List<Sale> findSalesByEvent(String eventName) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNamedQuery("Sale.findByEvent", Sale.class)
+                     .setParameter("eventName", eventName)
+                     .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Sale> findSalesByCategory(String categoryName) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNamedQuery("Sale.findByCategory", Sale.class)
+                     .setParameter("categoryName", categoryName)
+                     .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Sale> findSalesByMonth(int month) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNamedQuery("Sale.findByMonth", Sale.class)
+                     .setParameter("month", month)
+                     .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Sale> findSalesByYear(int year) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNamedQuery("Sale.findByYear", Sale.class)
+                     .setParameter("year", year)
+                     .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Sale> findSalesByPriceGreaterThan(double price) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createNamedQuery("Sale.findByPriceGreaterThan", Sale.class)
+                     .setParameter("price", price)
+                     .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }
