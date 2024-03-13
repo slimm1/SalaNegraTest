@@ -483,7 +483,7 @@
                           <Component id="yearChooser" min="-2" max="-2" attributes="0"/>
                           <Component id="priceValuesComboBox" min="-2" pref="117" max="-2" attributes="0"/>
                           <Component id="montChooser" min="-2" max="-2" attributes="0"/>
-                          <Component id="categoriesComboBox" min="-2" pref="188" max="-2" attributes="0"/>
+                          <Component id="usersComboBox" min="-2" pref="188" max="-2" attributes="0"/>
                           <Component id="showsComboBox" min="-2" pref="188" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
@@ -503,7 +503,7 @@
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="salesByCategoryButton" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
-                          <Component id="categoriesComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="usersComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
@@ -548,7 +548,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="salesByCategoryButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Informe de ventas por Categor&#xed;a"/>
+                <Property name="text" type="java.lang.String" value="Informe de ventas por Usuario"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="showsComboBox">
@@ -566,7 +566,7 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="categoriesComboBox">
+            <Component class="javax.swing.JComboBox" name="usersComboBox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">

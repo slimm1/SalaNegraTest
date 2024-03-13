@@ -21,8 +21,8 @@ import java.time.LocalDateTime;
         query = "SELECT s FROM Sale s WHERE s.event = :eventName"
     ),
         @NamedQuery(
-        name = "Sale.findByCategory",
-        query = "SELECT s FROM Sale s WHERE s.category = :categoryName"
+        name = "Sale.findByUser",
+        query = "SELECT s FROM Sale s WHERE s.user = :user"
     ),
         @NamedQuery(
         name = "Sale.findByMonth",

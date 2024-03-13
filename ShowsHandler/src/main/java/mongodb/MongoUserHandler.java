@@ -80,14 +80,6 @@ public class MongoUserHandler {
         }
     }
     
-    //Uso de filtro para determinar si la cadena coincide totalmente con shows.titulo.
-    // ejemplo de acceso a un objeto diferente dentro de una coleccion de objetos
-    public List<User> listByShow(String show){
-        if(show.isEmpty()){return null;}
-        Bson filter = Filters.eq("shows.titulo", show);
-        return userCollection.find(filter).into(new ArrayList());
-    }
-    
     // Filtro para determinar si un registro contiene una determinada cadena de caracteres.
     public List<User> listByUsername(String username){
         if(username.isEmpty()){return null;}
@@ -95,33 +87,9 @@ public class MongoUserHandler {
         return userCollection.find(filter).into(new ArrayList());
     }
     
-    public List<User> listByAge(int age){
-        Bson filter = Filters.eq("edad", age);
-        return userCollection.find(filter).into(new ArrayList());
-    }
-    
     //devuelve toda la coleccion en una lista de objetos.
     public List<User> getAllUsers(){
         return userCollection.find().into(new ArrayList());
-    }
-    
-    public Set<Event> getAllShow(){
-        Set<Event> allShows = new HashSet();
-        MongoCursor<User> cursor = userCollection.find().iterator();
-        while(cursor.hasNext()){
-            User u = cursor.next();
-            allShows.addAll(u.getPurchasedShows());
-        }
-        return allShows;
-    }
-    
-    public Event getOneShow(Event show){
-        MongoCursor<User> cursor = userCollection.find().iterator();
-        while(cursor.hasNext()){
-            User u = cursor.next();
-            if(u.getPurchasedShows().contains(show)) return u.getPurchasedShows().get(u.getPurchasedShows().indexOf(show));
-        }        
-        return null;
     }
     
     public static MongoUserHandler getInstance(){

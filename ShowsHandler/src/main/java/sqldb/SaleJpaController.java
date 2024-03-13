@@ -1,4 +1,4 @@
-package controller;
+package sqldb;
 
 import controller.exceptions.NonexistentEntityException;
 import jakarta.persistence.EntityManager;
@@ -144,11 +144,11 @@ public class SaleJpaController implements Serializable {
         }
     }
 
-    public List<Sale> findSalesByCategory(String categoryName) {
+    public List<Sale> findSalesByUser(String username) {
         EntityManager em = getEntityManager();
         try {
-            return em.createNamedQuery("Sale.findByCategory", Sale.class)
-                     .setParameter("categoryName", categoryName)
+            return em.createNamedQuery("Sale.findByUser", Sale.class)
+                     .setParameter("user", username)
                      .getResultList();
         } finally {
             em.close();

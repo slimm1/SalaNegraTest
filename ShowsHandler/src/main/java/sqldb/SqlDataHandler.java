@@ -1,6 +1,5 @@
 package sqldb;
 
-import controller.SaleJpaController;
 import java.util.List;
 import model.Sale;
 
@@ -37,4 +36,24 @@ public class SqlDataHandler {
     public List<Sale> getAll(){
         return salesController.findSaleEntities();
     }
+    
+    public List<Sale> findByEvent(String eventName){
+        return salesController.findSalesByEvent(eventName);
+    }
+    
+    public List<Sale> findByCategory(String username){
+        return salesController.findSalesByUser(username);
+    }
+    
+    public List<Sale> findByMonth(int month){
+        return salesController.findSalesByMonth(month);
+    }
+    
+    public List<Sale> findByYear(int year){
+        return salesController.findSalesByYear(year);
+    }     
+
+    public List<Sale> findByPriceGreaterThan(double price){
+        return salesController.findSalesByPriceGreaterThan(price);
+    }  
 }
