@@ -3,6 +3,7 @@ package view;
 import controller.LoginController;
 import controller.MainController;
 import javax.swing.DefaultListModel;
+import javax.swing.JSpinner;
 import model.Event;
 import mongodb.MongoEventHandler;
 import utilities.DateHandler;
@@ -28,14 +29,19 @@ public class MainFrame extends javax.swing.JFrame {
     public void initView(){
         this.usernameLabel.setText(MainController.getInstance().getCurrentUser().getUsername());
         this.showLabel.setText("-");
+        this.priceLabel.setText("0.00");
+        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) quantitySpinner.getEditor();
+        editor.getTextField().setEditable(false);
     }
     
     public void setListeners(){
+        
         this.logoutButton.addActionListener(e->{
             this.setVisible(false);
             LoginController.getInstance().getLoginFrame().setVisible(true);
             MainController.getInstance().setCurrentUser(null);
         });
+        
         this.progCalendar.addPropertyChangeListener(e->{
             DefaultListModel<String> listModel = new DefaultListModel<>();
             for (Event item : MongoEventHandler.getInstance().getEventsOnDate(DateHandler.converToLocalDate(progCalendar.getDate()))){
@@ -43,6 +49,41 @@ public class MainFrame extends javax.swing.JFrame {
             }
             this.showList.setModel(listModel);
         });
+        
+        this.showList.addListSelectionListener(e->{
+            if(!e.getValueIsAdjusting()){
+                this.showInfoDisplay.setText("");
+                if(showList.getSelectedValue()!=null){
+                    selectedEventChanged();
+                }
+                else{
+                    this.showLabel.setText("-");
+                    this.priceLabel.setText("0.00");
+                }
+            }
+        });
+        
+        this.quantitySpinner.addChangeListener(e->{
+            double ogPrice = 12;
+            double price = ogPrice *(int)quantitySpinner.getModel().getValue();
+            this.priceLabel.setText(String.valueOf(price));
+        });
+    }
+    
+    private void selectedEventChanged(){
+        Event selectedEvent = MongoEventHandler.getInstance().getEventByTitle(showList.getSelectedValue());
+        showInfoDisplay.append("Titulo --> " + selectedEvent.getTitle() + "\n");
+        showInfoDisplay.append("Descripcion --> " + selectedEvent.getDescription()+ "\n");
+        showInfoDisplay.append("URL --> " + selectedEvent.getUrl()+ "\n");
+        showInfoDisplay.append("Hora de comienzo --> " + selectedEvent.getStartDateTime().getHour()+":"+selectedEvent.getStartDateTime().getMinute() + "\n");
+        if(!selectedEvent.getCats().isEmpty()){
+            showInfoDisplay.append("Categorias:\n");
+            selectedEvent.getCats().forEach(cat->{
+                showInfoDisplay.append("\t->" + cat.getCatName() + "\n");
+            });
+        }
+        this.showLabel.setText(selectedEvent.getTitle());
+        this.priceLabel.setText(String.valueOf(selectedEvent.getPrice()));
     }
 
     /**

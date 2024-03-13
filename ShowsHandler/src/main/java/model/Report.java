@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 /**
- * @author marti
+ * @author Martin Ramonda
  */
 public class Report {
     private List<Sale> salesReport;
