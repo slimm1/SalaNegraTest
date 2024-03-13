@@ -68,6 +68,10 @@ public class MainFrame extends javax.swing.JFrame {
             double price = ogPrice *(int)quantitySpinner.getModel().getValue();
             this.priceLabel.setText(String.valueOf(price));
         });
+        
+        this.buyButton.addActionListener(e->{
+            
+        });
     }
     
     private void selectedEventChanged(){
@@ -145,6 +149,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         showInfoDisplay.setEditable(false);
         showInfoDisplay.setColumns(20);
+        showInfoDisplay.setLineWrap(true);
         showInfoDisplay.setRows(5);
         showInfoDisplay.setEnabled(false);
         jScrollPane3.setViewportView(showInfoDisplay);

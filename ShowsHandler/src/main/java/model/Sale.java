@@ -1,15 +1,23 @@
 package model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
- *
  * @author Martin Ramonda
  */
+@Entity
+@Table(name = "sales")
 public class Sale {
+    
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private User user;
-    private Event show;
+    private String user;
+    private String event;
     private LocalDateTime saleDateTime;
     private int numTickets;
     private double totalPrice;
@@ -17,9 +25,9 @@ public class Sale {
     public Sale() {
     }
 
-    public Sale(User user, Event show, LocalDateTime saleDateTime, int numTickets, double totalPrice) {
+    public Sale(String user, String event, LocalDateTime saleDateTime, int numTickets, double totalPrice) {
         this.user = user;
-        this.show = show;
+        this.event = event;
         this.saleDateTime = saleDateTime;
         this.numTickets = numTickets;
         this.totalPrice = totalPrice;
@@ -33,20 +41,20 @@ public class Sale {
         this.id = id;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
-    public Event getShow() {
-        return show;
+    public String getShow() {
+        return event;
     }
 
-    public void setShow(Event show) {
-        this.show = show;
+    public void setShow(String show) {
+        this.event = show;
     }
 
     public LocalDateTime getSaleDateTime() {
