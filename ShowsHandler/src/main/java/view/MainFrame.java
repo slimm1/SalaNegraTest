@@ -2,28 +2,41 @@ package view;
 
 import controller.LoginController;
 import controller.MainController;
+import java.time.LocalDateTime;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import model.Category;
 import model.Event;
+import model.Sale;
 import mongodb.MongoEventHandler;
+import sqldb.SqlDataHandler;
+import tablemodel.EventTableModel;
+import tablemodel.SaleTableModel;
 import utilities.DateHandler;
 
 /**
  * @author Martin Ramonda
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    
+    private EventTableModel eventModel;
+    private SaleTableModel saleModel;
+    
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
         initView();
+        setListeners();
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        setListeners();
     }
     
     public void initView(){
@@ -32,16 +45,46 @@ public class MainFrame extends javax.swing.JFrame {
         this.priceLabel.setText("0.00");
         JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) quantitySpinner.getEditor();
         editor.getTextField().setEditable(false);
+        setUpCategories();
+        setUpEventComboBox();
+        setUpShowTable();
+        setUpSalesTable();
+    }
+    
+    private void setUpSalesTable(){
+        saleModel = new SaleTableModel(SqlDataHandler.getInstance().getAll());
+        this.salesSummaryDisplayTable.setModel(saleModel);
+    }
+    
+    private void setUpShowTable(){
+        eventModel = new EventTableModel(MongoEventHandler.getInstance().getAllEvents());
+        this.allShowsDisplayTable.setModel(eventModel);
+    }
+    
+    private void setUpCategories(){
+        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel();
+        comboBoxModel.addElement("");
+        MongoEventHandler.getInstance().getAllCategories().forEach(cat->{
+            comboBoxModel.addElement(cat);
+        });        
+        this.categoriesComboBox.setModel(comboBoxModel);
+        this.categoryFilterCombo.setModel(comboBoxModel);
+    }
+    
+    private void setUpEventComboBox(){
+        DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel();
     }
     
     public void setListeners(){
         
+        // listener para boton de logout
         this.logoutButton.addActionListener(e->{
             this.setVisible(false);
             LoginController.getInstance().getLoginFrame().setVisible(true);
             MainController.getInstance().setCurrentUser(null);
         });
         
+        // listener para cambio de fecha en el jcalendar
         this.progCalendar.addPropertyChangeListener(e->{
             DefaultListModel<String> listModel = new DefaultListModel<>();
             for (Event item : MongoEventHandler.getInstance().getEventsOnDate(DateHandler.converToLocalDate(progCalendar.getDate()))){
@@ -50,6 +93,7 @@ public class MainFrame extends javax.swing.JFrame {
             this.showList.setModel(listModel);
         });
         
+        // listener para cambio de seleccion en el jlist
         this.showList.addListSelectionListener(e->{
             if(!e.getValueIsAdjusting()){
                 this.showInfoDisplay.setText("");
@@ -63,14 +107,55 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         
+        // listener para cambio de item en el jspinner
         this.quantitySpinner.addChangeListener(e->{
             double ogPrice = 12;
             double price = ogPrice *(int)quantitySpinner.getModel().getValue();
             this.priceLabel.setText(String.valueOf(price));
         });
         
+        // listener para el boton de comprar
         this.buyButton.addActionListener(e->{
-            
+            if(priceLabel.getText().equalsIgnoreCase("0.00")){
+                JOptionPane.showMessageDialog(null, "Debes seleccionar un show para realizar compras", "ALERTA", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                int opcion = JOptionPane.showConfirmDialog(null, "¿Comprar entradas por valor de "+ this.priceLabel.getText() + "?", "Realizar Compra", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    String user = MainController.getInstance().getCurrentUser().getUsername();
+                    String event = this.showList.getSelectedValue();
+                    int numTickets = (int)this.quantitySpinner.getModel().getValue();
+                    double totalPrice = Double.parseDouble(this.priceLabel.getText());
+                    Sale newSale = new Sale(user,event,LocalDateTime.now(),numTickets,totalPrice);
+                    SqlDataHandler.getInstance().insertSale(newSale);
+                    JOptionPane.showMessageDialog(null, "Compra realizada con éxito!", "OKAY", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        
+        // listener para el comboBox de categorias
+        this.categoriesComboBox.addActionListener(e->{
+            loadQueryResult();
+        });
+        
+        //listener para textfield de titulo
+        nameShowFieldFilter.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                loadQueryResult();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                loadQueryResult();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
+        
+        //listener para jmonthchooser
+        montShowFilter.addPropertyChangeListener("month", e->{
+            loadQueryResult();
         });
     }
     
@@ -88,6 +173,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
         this.showLabel.setText(selectedEvent.getTitle());
         this.priceLabel.setText(String.valueOf(selectedEvent.getPrice()));
+    }
+    
+    private void loadQueryResult() {
+        eventModel.addEvents(MongoEventHandler.getInstance().getEventsBy(nameShowFieldFilter.getText(), (String)categoriesComboBox.getSelectedItem(), montShowFilter.getMonth()+1));
     }
 
     /**
@@ -528,4 +617,5 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel usernameLabel;
     private com.toedter.calendar.JYearChooser yearChooser;
     // End of variables declaration//GEN-END:variables
+
 }

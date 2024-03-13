@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "sales")
-public class Sale {
+public class Sale implements Serializable {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -49,12 +50,12 @@ public class Sale {
         this.user = user;
     }
 
-    public String getShow() {
+    public String getEvent() {
         return event;
     }
 
-    public void setShow(String show) {
-        this.event = show;
+    public void setEvent(String event) {
+        this.event = event;
     }
 
     public LocalDateTime getSaleDateTime() {
