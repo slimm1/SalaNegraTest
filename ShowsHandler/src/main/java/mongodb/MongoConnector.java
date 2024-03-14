@@ -13,6 +13,9 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
+/**
+ * @author Martin Ramonda
+ */
 public class MongoConnector {
     
     private static MongoConnector instance;

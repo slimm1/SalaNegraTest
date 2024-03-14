@@ -13,6 +13,7 @@ import model.Event;
 import model.Sale;
 import mongodb.MongoEventHandler;
 import mongodb.MongoUserHandler;
+import sqldb.SqlConnector;
 import sqldb.SqlDataHandler;
 import tablemodel.EventTableModel;
 import tablemodel.SaleTableModel;
@@ -26,11 +27,14 @@ public class MainFrame extends javax.swing.JFrame {
     
     private EventTableModel eventModel;
     private SaleTableModel saleModel;
+    private SqlConnector connector;
     
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
+        connector = new SqlConnector();
+        connector.checkOrCreateDatabase();
         initComponents();
         initView();
         setListeners();
@@ -142,6 +146,7 @@ public class MainFrame extends javax.swing.JFrame {
                     Sale newSale = new Sale(user,event,LocalDateTime.now(),numTickets,totalPrice);
                     SqlDataHandler.getInstance().insertSale(newSale);
                     JOptionPane.showMessageDialog(null, "Compra realizada con éxito!", "OKAY", JOptionPane.INFORMATION_MESSAGE);
+                    setUpSalesTable();
                 }
             }
         });

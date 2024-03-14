@@ -88,6 +88,7 @@ public class Event {
     public void setCats(List<Category> cats) {
         this.cats = cats;
     }
+    
     public double getPrice(){
         return price;
     }
