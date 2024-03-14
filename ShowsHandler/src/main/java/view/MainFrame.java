@@ -196,7 +196,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         annualSalesButton.addActionListener(e->{
             reportsDisplay.setText("");
-            String report = ReportWriter.writeSalesReport(SqlDataHandler.getInstance().findByYear(yearChooser.getYear()+1));
+            String report = ReportWriter.writeSalesReport(SqlDataHandler.getInstance().findByYear(yearChooser.getYear()));
             reportsDisplay.setText(report);
         });
         
